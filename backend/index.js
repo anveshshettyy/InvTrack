@@ -107,11 +107,11 @@ app.post("/create/inventory", isLoggedIn, async function (req, res) {
 });
 
 app.get('/inventories', isLoggedIn, async (req, res) => {
-    const { email } = req.user; // Only email is needed for lookup
+    const { email } = req.user; 
     try {
         const user = await userModel.findOne({ email }).populate("inventories");
         if (user && user.inventories) {
-            res.json(user.inventories); // Send only the inventories
+            res.json(user.inventories); 
         } else {
             res.status(404).json({ message: "No inventories found for this user" });
         }
@@ -128,35 +128,33 @@ app.post("/inventory/:inventoryId/items/create", isLoggedIn, async function (req
     let { items } = req.body;
 
     try {
-        let inventory = await inventoryModel.findById(inventoryId).populate('items'); // Populate to get existing items
+        let inventory = await inventoryModel.findById(inventoryId).populate('items');
 
         if (!inventory) {
             return res.status(404).send("Inventory not found");
         }
 
-        const existingItems = inventory.items; // Existing items in the inventory
+        const existingItems = inventory.items;
         let currentTotalValue = inventory.totalInventoryValue;
         let currentTotalQuantity = inventory.totalInventoryQuantity;
 
         for (let item of items) {
-            // Ensure the quantity is a number
-            const quantity = parseInt(item.quantity, 10); // Convert to integer
-            const price = parseFloat(item.price); // Ensure price is a float
-            const itemName = item.itemName; // Ensure item name is a string
+            const quantity = parseInt(item.quantity, 10); 
+            const price = parseFloat(item.price); 
+            const itemName = item.itemName; 
 
-            // Check if the item already exists in the inventory
+           
             const existingItem = existingItems.find(existing => existing.itemName === itemName);
 
             if (existingItem) {
-                // If the item exists, update its quantity
+                
                 existingItem.quantity += quantity;
                 currentTotalQuantity += quantity;
                 currentTotalValue += price * quantity;
 
-                // Save the updated item
+                
                 await itemModel.findByIdAndUpdate(existingItem._id, { quantity: existingItem.quantity });
             } else {
-                // Create new item
                 let createItem = await itemModel.create({
                     inventory: inventoryId,
                     itemName: itemName,
@@ -167,8 +165,7 @@ app.post("/inventory/:inventoryId/items/create", isLoggedIn, async function (req
                 });
 
                 inventory.items.push(createItem._id);
-
-                // Update totals for the new item
+      
                 currentTotalQuantity += quantity;
                 currentTotalValue += price * quantity;
             }
