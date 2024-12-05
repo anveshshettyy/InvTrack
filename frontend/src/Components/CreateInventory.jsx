@@ -17,10 +17,12 @@ const CreateInventory = () => {
     try {
       const response = await axios.post("http://localhost:3000/create/inventory", inventoryData, { withCredentials: true });
       console.log('Inventory created:', response.data);
+      console.log(inventoryData);
+      
       setName('');
       setDescription('');
       setIsCreated(true);
-      setTimeout(() => setIsCreated(false), 3000); // Hide message after 3 seconds
+      setTimeout(() => setIsCreated(false), 3000);
     } catch (error) {
       console.error('Error creating inventory:', error);
     }
