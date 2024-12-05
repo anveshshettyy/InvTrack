@@ -83,20 +83,19 @@ app.get("/profile/:companyName", isLoggedIn, async function (req, res) {
 
 app.post("/create/inventory", isLoggedIn, async function (req, res) {
     let { email, userid } = req.user;
-    let { name, inventoryDescription } = req.body;
+    let { name, description } = req.body;
 
     try {
         // Create the new inventory
         let createInventory = await inventoryModel.create({
-            name,  // Directly use name from the request body
-            description: inventoryDescription,
+            name, 
+            description,
             user: userid
         });
 
-        // Find the user and push the new inventory's ID into their inventories array
         const user = await userModel.findById(userid);
-        user.inventories.push(createInventory._id);  // Push the new inventory ID to the user's inventories array
-        await user.save();  // Save the updated user document
+        user.inventories.push(createInventory._id);  
+        await user.save(); 
 
         res.status(201).send({
             message: "Inventory created successfully",
