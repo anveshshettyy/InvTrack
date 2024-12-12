@@ -58,7 +58,7 @@ const Profile = () => {
             <p className='text-[2.5vh] text-gray-400 '>Company Email <br /> <span className='text-black text-[2.8vh] '  >{userData.email}</span></p>
             <p className='text-[2.5vh] text-gray-500'>Phone <br /> <span className='text-black text-[2.8vh] '  >{userData.phone}</span></p>
             <p className='text-[2.5vh] text-gray-400 '>Country<br /> <span className='text-black text-[2.8vh] '  >{userData.country}</span> </p>
-            <p className='text-[2.5vh] ml-[10px] text-gray-400 '>State <br /> <span className='text-black text-[2.8vh]  '  >{userData.state}</span></p>
+            <p className='text-[2.5vh] ml-[67px] text-gray-400 '>State <br /> <span className='text-black text-[2.8vh]  '  >{userData.state}</span></p>
           </div>
         </div>
       </div>
