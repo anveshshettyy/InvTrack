@@ -4,7 +4,6 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import Banner from '../assets/images/Banner.jpg'
 import { IoIosLogOut } from "react-icons/io";
 
-
 const Profile = () => {
   const [userData, setUserData] = useState(null);
   const [inventoryItems, setInventoryItems] = useState([]);
