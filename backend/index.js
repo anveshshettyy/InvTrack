@@ -44,7 +44,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // Signup Route
-app.get("/signup", function (req, res) {
+app.get("/api/signup", function (req, res) {
     try {
         res.send("hello");
     } catch {
@@ -52,7 +52,7 @@ app.get("/signup", function (req, res) {
     }
 });
 
-app.post("/signup/create", function (req, res) {
+app.post("/api/signup/create", function (req, res) {
     let { companyName, email, password, country, state, phone } = req.body;
 
     bcrypt.genSalt(10, function (err, salt) {
@@ -79,7 +79,7 @@ app.post("/signup/create", function (req, res) {
 
 
 // Login Route
-app.post("/login", async function (req, res) {
+app.post("/api/login", async function (req, res) {
     let { email, password } = req.body;
     let verifyUser = await userModel.findOne({ email });
     if (!verifyUser) return res.status(404).send("No user found");
@@ -100,13 +100,13 @@ app.post("/login", async function (req, res) {
 });
 
 // Profile Route
-app.get("/profile/:companyName", isLoggedIn, async function (req, res) {
+app.get("/api/profile/:companyName", isLoggedIn, async function (req, res) {
     let { email, userid } = req.user;
     let userData = await userModel.findOne({ email });
     res.send(userData);
 });
 
-app.post("/create/inventory", isLoggedIn, async function (req, res) {
+app.post("/api/create/inventory", isLoggedIn, async function (req, res) {
     let { email, userid } = req.user;
     let { name, description } = req.body;
 
@@ -130,7 +130,7 @@ app.post("/create/inventory", isLoggedIn, async function (req, res) {
     }
 });
 
-app.get('/inventories', isLoggedIn, async (req, res) => {
+app.get('/api/inventories', isLoggedIn, async (req, res) => {
     const { email } = req.user; 
     try {
         const user = await userModel.findOne({ email }).populate("inventories");
@@ -147,7 +147,7 @@ app.get('/inventories', isLoggedIn, async (req, res) => {
 
 
 
-app.post("/inventory/:inventoryId/items/create", isLoggedIn, async function (req, res) {
+app.post("/api/inventory/:inventoryId/items/create", isLoggedIn, async function (req, res) {
     let { inventoryId } = req.params;
     let { items } = req.body;
 
@@ -208,7 +208,7 @@ app.post("/inventory/:inventoryId/items/create", isLoggedIn, async function (req
 });
 
 
-app.get('/search', isLoggedIn, async (req, res) => {
+app.get('/api/search', isLoggedIn, async (req, res) => {
     try {
         const { query } = req.query;
         const user = await userModel.findOne({ email: req.user.email }).populate({
@@ -256,7 +256,7 @@ app.get('/search', isLoggedIn, async (req, res) => {
 
 
 
-app.get("/items", isLoggedIn, async function (req, res) {
+app.get("/api/items", isLoggedIn, async function (req, res) {
     try {
         const { email } = req.user;
 
@@ -284,7 +284,7 @@ app.get("/items", isLoggedIn, async function (req, res) {
 });
 
 
-app.get("/inventory", isLoggedIn, async function (req, res) {
+app.get("/api/inventory", isLoggedIn, async function (req, res) {
     let { email } = req.user;
 
     try {
@@ -332,7 +332,7 @@ app.get("/inventory", isLoggedIn, async function (req, res) {
     }
 });
 
-app.delete('/inventories/:inventoryId', async (req, res) => {
+app.delete('/api/inventories/:inventoryId', async (req, res) => {
     const { inventoryId } = req.params;
 
     try {
@@ -375,7 +375,7 @@ app.delete('/inventories/:inventoryId', async (req, res) => {
     }
 });
 
-app.get('/inventories/:inventoryId/items', async (req, res) => {
+app.get('/api/inventories/:inventoryId/items', async (req, res) => {
     const { inventoryId } = req.params;
 
     try {
@@ -392,7 +392,7 @@ app.get('/inventories/:inventoryId/items', async (req, res) => {
     }
 });
 
-app.get("/inventories/:inventoryId", async (req, res) => {
+app.get("/api/inventories/:inventoryId", async (req, res) => {
     const { inventoryId } = req.params;
     try {
         const inventory = await inventoryModel.findById(inventoryId).populate('items');
@@ -406,7 +406,7 @@ app.get("/inventories/:inventoryId", async (req, res) => {
     }
 });
 
-app.get('/item/:itemId', isLoggedIn, async (req, res) => {
+app.get('/api/item/:itemId', isLoggedIn, async (req, res) => {
     try {
         const { itemId } = req.params;
         const item = await itemModel.findById(itemId).populate({
@@ -427,7 +427,7 @@ app.get('/item/:itemId', isLoggedIn, async (req, res) => {
 
 
 
-app.put('/items/:itemId', async (req, res) => {
+app.put('/api/items/:itemId', async (req, res) => {
     const { itemId } = req.params;
     const { name, price, quantity, category } = req.body;
 
@@ -466,7 +466,7 @@ app.put('/items/:itemId', async (req, res) => {
 });
 
 
-app.put('/inventories/:inventoryId', async (req, res) => {
+app.put('/api/inventories/:inventoryId', async (req, res) => {
     const { inventoryId } = req.params;
     const { name } = req.body;
 
@@ -490,7 +490,7 @@ app.put('/inventories/:inventoryId', async (req, res) => {
 
 
 
-app.delete('/items/:itemId', async (req, res) => {
+app.delete('/api/items/:itemId', async (req, res) => {
     const { itemId } = req.params;
 
     try {
@@ -526,7 +526,7 @@ app.delete('/items/:itemId', async (req, res) => {
 
 
 // Logout Route
-app.post("/logout", function (req, res) {
+app.post("/api/logout", function (req, res) {
     res.cookie("token", "", {
         httpOnly: true,
         secure: false,
@@ -535,7 +535,7 @@ app.post("/logout", function (req, res) {
     res.status(200).send({ message: "Logged out successfully" });
 });
 
-app.get("/country", isLoggedIn, async function (req, res) {
+app.get("/api/country", isLoggedIn, async function (req, res) {
     try {
         const { email, userid } = req.user;
         const user = await userModel.findOne({ email });
@@ -551,7 +551,7 @@ app.get("/country", isLoggedIn, async function (req, res) {
     }
 });
 
-app.get("/companyName", isLoggedIn, async function (req, res) {
+app.get("/api/companyName", isLoggedIn, async function (req, res) {
     try {
         const { email, userid } = req.user;
         const user = await userModel.findOne({ email });
@@ -568,7 +568,7 @@ app.get("/companyName", isLoggedIn, async function (req, res) {
 });
 
 
-app.get("/categories", isLoggedIn, async (req, res) => {
+app.get("/api/categories", isLoggedIn, async (req, res) => {
     try {
         const { email } = req.user;
 
@@ -599,7 +599,7 @@ app.get("/categories", isLoggedIn, async (req, res) => {
 });
 
 
-app.get("/categories/:category/items", isLoggedIn, async (req, res) => {
+app.get("/api/categories/:category/items", isLoggedIn, async (req, res) => {
     try {
         const { category } = req.params;
         const { email } = req.user;
@@ -643,7 +643,7 @@ app.get("/categories/:category/items", isLoggedIn, async (req, res) => {
 
 //--------------ADMIN SETTINGS--------------
 
-app.post("/admin", async (req, res) => {
+app.post("/api/admin", async (req, res) => {
    
     let { username , password } = req.body ;
     const admin  = await adminModel.findOne({ username });
@@ -665,23 +665,23 @@ app.post("/admin", async (req, res) => {
 
 });
 
-app.get('/check-admin', adminIsLoggedIn, (req, res) => {
+app.get('/api/check-admin', adminIsLoggedIn, (req, res) => {
     res.status(200).send({ isAdmin: true });
 });
 
 
 
-app.get("/admin/users" , async (req,res)=> {
+app.get("/api/admin/users" , async (req,res)=> {
     const user = await userModel.find({});
     res.json(user);
 });
 
-app.get("/admin/inventories" , async (req,res)=> {
+app.get("/api/admin/inventories" , async (req,res)=> {
     const inventory = await inventoryModel.find({});
     res.json(inventory);
 });
 
-app.get("/admin/items", async (req, res) => {
+app.get("/api/admin/items", async (req, res) => {
     try {
         
         const items = await itemModel.find({}).populate('inventory', 'name'); 
@@ -697,7 +697,7 @@ app.get("/admin/items", async (req, res) => {
 
 
 
-app.put('/admin/users/:id', async (req, res) => {
+app.put('/api/admin/users/:id', async (req, res) => {
     try {
         const userId = req.params.id;
         const updatedData = req.body; 
@@ -715,7 +715,7 @@ app.put('/admin/users/:id', async (req, res) => {
     }
 });
 
-app.delete('/admin/users/:id', async (req, res) => {
+app.delete('/api/admin/users/:id', async (req, res) => {
     try {
         const { id } = req.params;
 
@@ -737,7 +737,7 @@ app.delete('/admin/users/:id', async (req, res) => {
     }
 });
 
-app.put('/admin/inventories/:inventoryId', async (req, res) => {
+app.put('/api/admin/inventories/:inventoryId', async (req, res) => {
     const { inventoryId } = req.params;
     const { name, description } = req.body;
 
@@ -759,7 +759,7 @@ app.put('/admin/inventories/:inventoryId', async (req, res) => {
     }
 });
 
-app.delete('/admin/inventories/:inventoryId', async (req, res) => {
+app.delete('/api/admin/inventories/:inventoryId', async (req, res) => {
     const { inventoryId } = req.params;
 
     try {
@@ -782,7 +782,7 @@ app.delete('/admin/inventories/:inventoryId', async (req, res) => {
     }
 });
 
-app.put('/items/:itemId', async (req, res) => {
+app.put('/api/items/:itemId', async (req, res) => {
     const { itemId } = req.params;
     const { name, price, quantity, category } = req.body;
 
@@ -822,7 +822,7 @@ app.put('/items/:itemId', async (req, res) => {
 
 
 
-app.delete('/items/:itemId', async (req, res) => {
+app.delete('/api/items/:itemId', async (req, res) => {
     const { itemId } = req.params;
 
     try {
