@@ -7,7 +7,7 @@ const inventoryModel = require("./models/inventory");
 const itemModel = require('./models/items');
 const adminModel = require('./models/admin');
 const cookieParser = require('cookie-parser');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const path = require("path");
 
