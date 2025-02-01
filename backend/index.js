@@ -13,30 +13,25 @@ const path = require("path");
 
 const app = express();
 
-// app.use(cors({
-//     origin: "*",  // Allow all origins for production if both frontend and backend are on the same domain
-//     credentials: true
-// }));
+app.use(
+    cors({
+        origin: "http://localhost:5173", 
+        credentials: true
+    })
+);
 
-const corsOptions = {
-    origin: process.env.NODE_ENV === 'production' 
-        ? 'https://your-frontend-domain.com'  // Replace with your production frontend URL
-        : 'http://localhost:5173',  // Local frontend URL during development
-    credentials: true  // Allow credentials (cookies, authorization headers, etc.)
-};
 
-app.use(cors(corsOptions));
 
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-mongoose.connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
-.then(() => console.log("Connected to MongoDB Atlas"))
-.catch(err => console.error("MongoDB Connection Error:", err));
+// mongoose.connect(process.env.MONGODB_URI, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true
+// })
+// .then(() => console.log("Connected to MongoDB Atlas"))
+// .catch(err => console.error("MongoDB Connection Error:", err));
 
 // Serve React frontend in production
 if (process.env.NODE_ENV === 'production') {
@@ -44,7 +39,7 @@ if (process.env.NODE_ENV === 'production') {
 
   
     app.get('*', (req, res) => {
-        res.sendFile(path.join(__dirname, "../frontend/dist", "index.html"));
+        res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
     });
 }
 
