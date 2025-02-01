@@ -12,7 +12,7 @@ const Navbar = () => {
     // Fetch company name from backend
     const fetchCompanyName = async () => {
       try {
-        const response = await axiosInstance.get('http://localhost:3000/companyName', { withCredentials: true });
+        const response = await axiosInstance.get('/companyName', { withCredentials: true });
         console.log('Fetched company data:', response.data);
 
         if (response.data) {

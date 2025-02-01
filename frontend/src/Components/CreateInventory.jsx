@@ -16,7 +16,7 @@ const CreateInventory = () => {
     };
 
     try {
-      const response = await axiosInstance.post("http://localhost:3000/create/inventory", inventoryData, { withCredentials: true });
+      const response = await axiosInstance.post("/create/inventory", inventoryData, { withCredentials: true });
       console.log('Inventory created:', response.data);
       console.log(inventoryData);
       

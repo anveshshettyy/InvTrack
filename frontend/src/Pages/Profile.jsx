@@ -14,11 +14,11 @@ const Profile = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const userResponse = await axiosInstance.get(`http://localhost:3000/profile/${companyName}`, { withCredentials: true });
+        const userResponse = await axiosInstance.get(`/profile/${companyName}`, { withCredentials: true });
         setUserData(userResponse.data);
 
 
-        const inventoryResponse = await axiosInstance.get(`http://localhost:3000/inventory/${userResponse.data.userid}`, { withCredentials: true });
+        const inventoryResponse = await axiosInstance.get(`/inventory/${userResponse.data.userid}`, { withCredentials: true });
         setInventoryItems(inventoryResponse.data);
       } catch (error) {
         console.error('Error fetching user data:', error);

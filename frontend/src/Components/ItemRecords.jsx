@@ -10,7 +10,7 @@ const ItemRecords = () => {
     useEffect(() => {
         const fetchItems = async () => {
             try {
-                const response = await axiosInstance.get('http://localhost:3000/admin/items');
+                const response = await axiosInstance.get('/admin/items');
                 console.log(response.data);
                 setItems(response.data);
             } catch (error) {
@@ -47,7 +47,7 @@ const ItemRecords = () => {
     const handleSaveClick = async (itemId) => {
         try {
             const response = await axios.put(
-                `http://localhost:3000/items/${itemId}`, // Updated endpoint
+                `/items/${itemId}`, // Updated endpoint
                 {
                     name: editFormData.itemName,
                     price: parseInt(editFormData.price), // Ensure correct type
@@ -66,7 +66,7 @@ const ItemRecords = () => {
 
     const deleteItem = async (itemId) => {
         try {
-            const response = await axios.delete(`http://localhost:3000/items/${itemId}`, { withCredentials: true });
+            const response = await axios.delete(`/items/${itemId}`, { withCredentials: true });
             // Update the state after deletion
             setItems(items.filter(item => item._id !== itemId));
         } catch (error) {

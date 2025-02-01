@@ -16,7 +16,7 @@ const InventoryDetails = () => {
   useEffect(() => {
     const fetchInventoryDetails = async () => {
       try {
-        const response = await axiosInstance.get(`http://localhost:3000/inventories/${inventoryId}`, { withCredentials: true });
+        const response = await axiosInstance.get(`/inventories/${inventoryId}`, { withCredentials: true });
         setInventory(response.data);
       } catch (error) {
         console.error('Error fetching inventory details:', error);
@@ -30,10 +30,10 @@ const InventoryDetails = () => {
   useEffect(() => {
     const fetchUserCountryAndCompany = async () => {
       try {
-        const countryResponse = await axiosInstance.get('http://localhost:3000/country', { withCredentials: true });
+        const countryResponse = await axiosInstance.get('/country', { withCredentials: true });
         setCurrencySymbol(countryResponse.data === 'India' ? '₹' : '$');
 
-        const companyResponse = await axiosInstance.get('http://localhost:3000/companyName', { withCredentials: true });
+        const companyResponse = await axiosInstance.get('/companyName', { withCredentials: true });
         setCompanyName(companyResponse.data); // Set the company name
       } catch (error) {
         console.error('Error fetching user country or company name:', error);

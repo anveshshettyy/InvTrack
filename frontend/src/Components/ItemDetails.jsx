@@ -15,7 +15,7 @@ const ItemDetails = () => {
   useEffect(() => {
     const fetchItemDetails = async () => {
       try {
-        const response = await axiosInstance.get(`http://localhost:3000/item/${itemId}`, { withCredentials: true });
+        const response = await axiosInstance.get(`/item/${itemId}`, { withCredentials: true });
         setItem(response.data);
       } catch (error) {
         console.error('Error fetching item details:', error);
@@ -29,7 +29,7 @@ const ItemDetails = () => {
   useEffect(() => {
     const fetchUserCountry = async () => {
       try {
-        const response = await axiosInstance.get('http://localhost:3000/country', { withCredentials: true });
+        const response = await axiosInstance.get('/country', { withCredentials: true });
         setCurrencySymbol(response.data === 'India' ? '₹' : '$');
       } catch (error) {
         console.error('Error fetching user country:', error);

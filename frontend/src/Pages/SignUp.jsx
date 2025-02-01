@@ -49,7 +49,7 @@ const SignUp = () => {
     e.preventDefault();
 
     try {
-      const response = await axiosInstance.post('http://localhost:3000/signup/create', formData, { withCredentials: true });
+      const response = await axiosInstance.post('/signup/create', formData, { withCredentials: true });
       const { companyName } = response.data;
       if (response.status === 200) {
         navigate(`/profile/${companyName}`);

@@ -12,7 +12,7 @@ const EditInventory = () => {
 
   // Fetch inventories from backend on component mount
   useEffect(() => {
-    axiosInstance.get('http://localhost:3000/inventories', { withCredentials: true })
+    axiosInstance.get('/inventories', { withCredentials: true })
       .then(response => {
         if (Array.isArray(response.data)) {
           setInventories(response.data);
@@ -29,7 +29,7 @@ const EditInventory = () => {
 
   // Delete inventory function
   const handleDelete = (inventoryId) => {
-    axios.delete(`http://localhost:3000/inventories/${inventoryId}`)
+    axios.delete(`/inventories/${inventoryId}`)
       .then(() => {
         // Remove the deleted inventory from the list
         setInventories(prevInventories => prevInventories.filter(inventory => inventory._id !== inventoryId));
@@ -42,7 +42,7 @@ const EditInventory = () => {
 
   // Rename inventory function
   const handleRename = (inventoryId) => {
-    axios.put(`http://localhost:3000/inventories/${inventoryId}`, { name: updatedName })
+    axios.put(`/inventories/${inventoryId}`, { name: updatedName })
       .then(response => {
         // Update the inventory in the state
         setInventories(prevInventories => 

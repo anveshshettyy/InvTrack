@@ -19,7 +19,7 @@ const UpdateInventory = () => {
     useEffect(() => {
         const fetchUserCountry = async () => {
             try {
-                const response = await axiosInstance.get('http://localhost:3000/country', { withCredentials: true });
+                const response = await axiosInstance.get('/country', { withCredentials: true });
                 setUserCountry(response.data);
             } catch (error) {
                 console.error('Error fetching user country:', error);
@@ -32,7 +32,7 @@ const UpdateInventory = () => {
     useEffect(() => {
         const fetchInventories = async () => {
             try {
-                const response = await axiosInstance.get('http://localhost:3000/inventories', { withCredentials: true });
+                const response = await axiosInstance.get('/inventories', { withCredentials: true });
                 setInventories(response.data);
                 setLoading(false);
             } catch (error) {
@@ -46,7 +46,7 @@ const UpdateInventory = () => {
     const fetchItems = async () => {
         if (selectedInventory) {
             try {
-                const response = await axiosInstance.get(`http://localhost:3000/inventories/${selectedInventory}/items`);
+                const response = await axiosInstance.get(`/inventories/${selectedInventory}/items`);
                 setItems(response.data);
             } catch (error) {
                 console.error('Error fetching items:', error);
@@ -70,7 +70,7 @@ const UpdateInventory = () => {
 
     const handleSaveItem = async (itemId) => {
         try {
-            await axios.put(`http://localhost:3000/items/${itemId}`, {
+            await axios.put(`/items/${itemId}`, {
                 name: updatedItemName,
                 price: updatedItemPrice,
                 quantity: updatedItemQuantity,
@@ -85,7 +85,7 @@ const UpdateInventory = () => {
 
     const handleDeleteItem = async (itemId) => {
         try {
-            await axios.delete(`http://localhost:3000/items/${itemId}`);
+            await axios.delete(`/items/${itemId}`);
             setItems((prevItems) => prevItems.filter(item => item._id !== itemId));
         } catch (error) {
             console.error('Error deleting item:', error);

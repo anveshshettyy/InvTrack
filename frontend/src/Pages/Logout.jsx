@@ -7,7 +7,7 @@ const Logout = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axiosInstance.post('http://localhost:3000/logout', {}, { withCredentials: true })
+    axiosInstance.post('/logout', {}, { withCredentials: true })
       .then(response => {
         console.log(response.data.message);
         navigate('/signin'); 

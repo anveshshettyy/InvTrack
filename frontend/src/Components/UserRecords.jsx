@@ -15,7 +15,7 @@ const UserRecords = () => {
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                const response = await axiosInstance.get('http://localhost:3000/admin/users', { withCredentials: true });
+                const response = await axiosInstance.get('/admin/users', { withCredentials: true });
                 if (Array.isArray(response.data)) {
                     setUsers(response.data);
                 } else {
@@ -30,7 +30,7 @@ const UserRecords = () => {
 
     const deleteUser = async (userId) => {
         try {
-            await axios.delete(`http://localhost:3000/admin/users/${userId}`, { withCredentials: true });
+            await axios.delete(`/admin/users/${userId}`, { withCredentials: true });
             setUsers(users.filter(user => user._id !== userId));
         } catch (error) {
             console.error('Error deleting user:', error);
@@ -50,7 +50,7 @@ const UserRecords = () => {
 
     const saveUser = async () => {
         try {
-            const response = await axios.put(`http://localhost:3000/admin/users/${editingUserId}`, formData, { withCredentials: true });
+            const response = await axios.put(`/admin/users/${editingUserId}`, formData, { withCredentials: true });
             const updatedUser = response.data;
             setUsers(users.map(user => (user._id === updatedUser._id ? updatedUser : user)));
             setEditingUserId(null);

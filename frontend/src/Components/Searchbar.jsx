@@ -16,7 +16,7 @@ const SearchBar = () => {
       return;
     }
     try {
-      const response = await axiosInstance.get(`http://localhost:3000/search?query=${query}`, { withCredentials: true });
+      const response = await axiosInstance.get(`/search?query=${query}`, { withCredentials: true });
       setSuggestions(response.data);
     } catch (error) {
       console.error('Error fetching suggestions:', error);

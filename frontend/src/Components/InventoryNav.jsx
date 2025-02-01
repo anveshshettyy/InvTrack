@@ -20,7 +20,7 @@ const InventoryNav = () => {
   useEffect(() => {
     const fetchCompanyName = async () => {
       try {
-        const response = await axiosInstance.get('http://localhost:3000/companyName', { withCredentials: true });
+        const response = await axiosInstance.get('/companyName', { withCredentials: true });
         console.log(response.data);
         
         setCompanyName(response.data); // Assuming the response contains companyName

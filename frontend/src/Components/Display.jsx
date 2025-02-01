@@ -13,7 +13,7 @@ const Display = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axiosInstance.get("http://localhost:3000/inventory", { withCredentials: true });
+        const response = await axiosInstance.get("/inventory", { withCredentials: true });
         
         const { companyName, country, inventories } = response.data;
 

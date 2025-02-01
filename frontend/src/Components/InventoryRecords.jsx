@@ -10,7 +10,7 @@ const InventoryRecords = () => {
     useEffect(() => {
         const fetchInventories = async () => {
             try {
-                const response = await axiosInstance.get('http://localhost:3000/admin/inventories', { withCredentials: true });
+                const response = await axiosInstance.get('/admin/inventories', { withCredentials: true });
                 setInventories(response.data);
             } catch (error) {
                 console.error('Error fetching inventories:', error);
@@ -37,7 +37,7 @@ const InventoryRecords = () => {
 
     const handleSaveClick = async (inventoryId) => {
         try {
-            const response = await axios.put(`http://localhost:3000/admin/inventories/${inventoryId}`, editFormData, { withCredentials: true });
+            const response = await axios.put(`/admin/inventories/${inventoryId}`, editFormData, { withCredentials: true });
             setInventories((prevInventories) =>
                 prevInventories.map((inv) => (inv._id === inventoryId ? response.data : inv))
             );
@@ -49,7 +49,7 @@ const InventoryRecords = () => {
 
     const deleteInventory = async (inventoryId) => {
         try {
-            await axios.delete(`http://localhost:3000/admin/inventories/${inventoryId}`, { withCredentials: true });
+            await axios.delete(`/admin/inventories/${inventoryId}`, { withCredentials: true });
             setInventories(inventories.filter(inv => inv._id !== inventoryId));
         } catch (error) {
             console.error('Error deleting inventory:', error);

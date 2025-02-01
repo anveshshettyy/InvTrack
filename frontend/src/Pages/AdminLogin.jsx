@@ -16,7 +16,7 @@ const AdminLogin = () => {
         setErrorMessage('');
 
         try {
-            const response = await axiosInstance.post("http://localhost:3000/admin", { username, password }, { withCredentials: true });
+            const response = await axiosInstance.post("/admin", { username, password }, { withCredentials: true });
             console.log('Admin logged in:', response.data);
             navigate('/admin'); // Redirect to Admin page after successful login
         } catch (error) {
