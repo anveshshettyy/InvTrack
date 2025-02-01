@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { IoHome } from "react-icons/io5";
 import { House } from 'lucide-react';
+import { axiosInstance } from '../axios';
 
 const countries = [
     { name: "United States", states: ["California", "Florida", "New York", "Texas"] },
@@ -48,7 +49,7 @@ const SignUp = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:3000/signup/create', formData, { withCredentials: true });
+      const response = await axiosInstance.post('http://localhost:3000/signup/create', formData, { withCredentials: true });
       const { companyName } = response.data;
       if (response.status === 200) {
         navigate(`/profile/${companyName}`);

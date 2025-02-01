@@ -5,6 +5,7 @@ import axios from 'axios';
 import logoW from '../assets/logos/InvTrack_LogoWhite.png'
 import { AlignJustify, ArrowDownRight, ArrowUpRight } from 'lucide-react';
 import Banner from '../assets/images/Buildings.jpg'
+import { axiosInstance } from '../axios';
 
 const InventoryNav = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -19,7 +20,7 @@ const InventoryNav = () => {
   useEffect(() => {
     const fetchCompanyName = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/companyName', { withCredentials: true });
+        const response = await axiosInstance.get('http://localhost:3000/companyName', { withCredentials: true });
         console.log(response.data);
         
         setCompanyName(response.data); // Assuming the response contains companyName

@@ -4,6 +4,7 @@ import UserRecords from '../Components/UserRecords';
 import InventoryRecords from '../Components/InventoryRecords';
 import ItemRecords from '../Components/ItemRecords';
 import axios from 'axios';
+import { axiosInstance } from '../axios';
 
 const AdminPage = () => {
     const [loading, setLoading] = useState(true);
@@ -13,7 +14,7 @@ const AdminPage = () => {
     useEffect(() => {
         const checkAdmin = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/check-admin', { withCredentials: true });
+                const response = await axiosInstance.get('http://localhost:3000/check-admin', { withCredentials: true });
                 setIsAdmin(response.data.isAdmin);
             } catch (error) {
                 console.error('Admin check failed:', error);

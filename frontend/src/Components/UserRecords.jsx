@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { axiosInstance } from '../axios';
 
 const UserRecords = () => {
     const [users, setUsers] = useState([]);
@@ -14,7 +15,7 @@ const UserRecords = () => {
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/admin/users', { withCredentials: true });
+                const response = await axiosInstance.get('http://localhost:3000/admin/users', { withCredentials: true });
                 if (Array.isArray(response.data)) {
                     setUsers(response.data);
                 } else {

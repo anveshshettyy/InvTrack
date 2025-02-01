@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { axiosInstance } from '../axios';
 
 const ItemRecords = () => {
     const [items, setItems] = useState([]);
@@ -9,7 +10,7 @@ const ItemRecords = () => {
     useEffect(() => {
         const fetchItems = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/admin/items');
+                const response = await axiosInstance.get('http://localhost:3000/admin/items');
                 console.log(response.data);
                 setItems(response.data);
             } catch (error) {

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { axiosInstance } from '../axios';
 
 const InventoryRecords = () => {
     const [inventories, setInventories] = useState([]);
@@ -9,7 +10,7 @@ const InventoryRecords = () => {
     useEffect(() => {
         const fetchInventories = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/admin/inventories', { withCredentials: true });
+                const response = await axiosInstance.get('http://localhost:3000/admin/inventories', { withCredentials: true });
                 setInventories(response.data);
             } catch (error) {
                 console.error('Error fetching inventories:', error);

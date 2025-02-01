@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { axiosInstance } from '../axios';
 
 const Display = () => {
   const [companyName, setCompanyName] = useState(null);
@@ -12,7 +13,7 @@ const Display = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/inventory", { withCredentials: true });
+        const response = await axiosInstance.get("http://localhost:3000/inventory", { withCredentials: true });
         
         const { companyName, country, inventories } = response.data;
 

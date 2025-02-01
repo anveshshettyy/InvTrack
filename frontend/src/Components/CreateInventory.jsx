@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { axiosInstance } from '../axios';
 
 const CreateInventory = () => {
   const [name, setName] = useState('');
@@ -15,7 +16,7 @@ const CreateInventory = () => {
     };
 
     try {
-      const response = await axios.post("http://localhost:3000/create/inventory", inventoryData, { withCredentials: true });
+      const response = await axiosInstance.post("http://localhost:3000/create/inventory", inventoryData, { withCredentials: true });
       console.log('Inventory created:', response.data);
       console.log(inventoryData);
       

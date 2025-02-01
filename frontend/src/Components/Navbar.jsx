@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'; // Use Link for navigation
 import axios from 'axios';
 import SearchBar from './Searchbar';
 import logo from '../assets/logos/InvTrack_Logo.png'
+import { axiosInstance } from '../axios';
 
 const Navbar = () => {
   const [companyName, setCompanyName] = useState(null);
@@ -11,7 +12,7 @@ const Navbar = () => {
     // Fetch company name from backend
     const fetchCompanyName = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/companyName', { withCredentials: true });
+        const response = await axiosInstance.get('http://localhost:3000/companyName', { withCredentials: true });
         console.log('Fetched company data:', response.data);
 
         if (response.data) {

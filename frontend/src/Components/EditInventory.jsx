@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { FaEdit  } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
+import { axiosInstance } from '../axios';
 
 const EditInventory = () => {
   const [inventories, setInventories] = useState([]);
@@ -11,7 +12,7 @@ const EditInventory = () => {
 
   // Fetch inventories from backend on component mount
   useEffect(() => {
-    axios.get('http://localhost:3000/inventories', { withCredentials: true })
+    axiosInstance.get('http://localhost:3000/inventories', { withCredentials: true })
       .then(response => {
         if (Array.isArray(response.data)) {
           setInventories(response.data);

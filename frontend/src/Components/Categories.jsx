@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { axiosInstance } from '../axios';
 
 const Categories = () => {
     const [categories, setCategories] = useState([]);
@@ -12,7 +13,7 @@ const Categories = () => {
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/categories', { withCredentials: true });
+                const response = await axiosInstance.get('http://localhost:3000/categories', { withCredentials: true });
                 setCategories(response.data.categories); // Access the 'categories' array from the response
             } catch (error) {
                 console.error('Error fetching categories:', error);
@@ -26,7 +27,7 @@ const Categories = () => {
     useEffect(() => {
         const fetchCountryName = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/country', { withCredentials: true });
+                const response = await axiosInstance.get('http://localhost:3000/country', { withCredentials: true });
                 console.log('Fetched country data:', response.data);
 
                 // Set the currency symbol based on the country name
@@ -45,7 +46,7 @@ const Categories = () => {
     const handleCategorySelect = async (categoryId) => {
         setSelectedCategory(categoryId);
         try {
-            const response = await axios.get(`http://localhost:3000/categories/${categoryId}/items`, { withCredentials: true });
+            const response = await axiosInstance.get(`http://localhost:3000/categories/${categoryId}/items`, { withCredentials: true });
             console.log(response.data);
             setItems(response.data);
         } catch (error) {

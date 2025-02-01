@@ -2,6 +2,7 @@ import axios from 'axios';
 import { House } from 'lucide-react';
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { axiosInstance } from '../axios';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -15,7 +16,7 @@ const Login = () => {
     const loginData = { email, password };
 
     try {
-      const response = await axios.post('http://localhost:3000/login', loginData, { withCredentials: true });
+      const response = await axiosInstance.post('http://localhost:3000/login', loginData, { withCredentials: true });
       const { companyName } = response.data
       if (response.status === 200) {
         navigate(`/profile/${companyName}`);

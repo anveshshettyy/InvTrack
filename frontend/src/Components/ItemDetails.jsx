@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import inventoryImg from '../assets/images/inventory3.jpeg'; // Import image
 import { IoIosArrowBack } from "react-icons/io";
+import { axiosInstance } from '../axios';
 
 const ItemDetails = () => {
   const { itemId } = useParams(); // Access itemId from URL
@@ -14,7 +15,7 @@ const ItemDetails = () => {
   useEffect(() => {
     const fetchItemDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/item/${itemId}`, { withCredentials: true });
+        const response = await axiosInstance.get(`http://localhost:3000/item/${itemId}`, { withCredentials: true });
         setItem(response.data);
       } catch (error) {
         console.error('Error fetching item details:', error);
@@ -28,7 +29,7 @@ const ItemDetails = () => {
   useEffect(() => {
     const fetchUserCountry = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/country', { withCredentials: true });
+        const response = await axiosInstance.get('http://localhost:3000/country', { withCredentials: true });
         setCurrencySymbol(response.data === 'India' ? '₹' : '$');
       } catch (error) {
         console.error('Error fetching user country:', error);

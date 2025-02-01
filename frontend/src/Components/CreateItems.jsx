@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { BadgeCheck } from 'lucide-react';
+import { axiosInstance } from '../axios';
 
 const CreateItems = ({ inventoryId }) => {
     const categories = [
@@ -26,7 +27,7 @@ const CreateItems = ({ inventoryId }) => {
     useEffect(() => {
         const fetchInventories = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/inventories', { withCredentials: true });
+                const response = await axiosInstance.get('http://localhost:3000/inventories', { withCredentials: true });
                 setInventories(response.data);
             } catch (error) {
                 console.error("Error fetching inventories:", error);
@@ -57,7 +58,7 @@ const CreateItems = ({ inventoryId }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`http://localhost:3000/inventory/${itemData.inventory}/items/create`, {
+            const response = await axiosInstance.post(`http://localhost:3000/inventory/${itemData.inventory}/items/create`, {
                 items: [itemData]
             }, { withCredentials: true });
             setAlertMessage("Item added successfully!");

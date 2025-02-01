@@ -1,3 +1,5 @@
+require('dotenv').config();
+const mongoose = require('mongoose');
 const express = require('express');
 const cors = require('cors');
 const userModel = require("./models/user");
@@ -7,17 +9,44 @@ const adminModel = require('./models/admin');
 const cookieParser = require('cookie-parser');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const path = require("path");
 
 const app = express();
 
-app.use(cors({
-    origin: 'http://localhost:5173',
-    credentials: true
-}));
+// app.use(cors({
+//     origin: "*",  // Allow all origins for production if both frontend and backend are on the same domain
+//     credentials: true
+// }));
+
+const corsOptions = {
+    origin: process.env.NODE_ENV === 'production' 
+        ? 'https://your-frontend-domain.com'  // Replace with your production frontend URL
+        : 'http://localhost:5173',  // Local frontend URL during development
+    credentials: true  // Allow credentials (cookies, authorization headers, etc.)
+};
+
+app.use(cors(corsOptions));
 
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+mongoose.connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+.then(() => console.log("Connected to MongoDB Atlas"))
+.catch(err => console.error("MongoDB Connection Error:", err));
+
+// Serve React frontend in production
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, "./frontend/dist")));  
+
+    // Handle all other routes (React routes)
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, "./frontend","dist", "index.html"));
+    });
+}
 
 // Signup Route
 app.get("/signup", function (req, res) {
@@ -42,7 +71,7 @@ app.post("/signup/create", function (req, res) {
                 phone
             });
 
-            let token = jwt.sign({ email, userid: createUser._id }, "shhh");
+            let token = jwt.sign({ email, userid: createUser._id }, process.env.JWT_SECRET_USER);
             res.cookie("token", token, {
                 expires: new Date(Date.now() + 25892000000),
                 httpOnly: true,
@@ -61,7 +90,7 @@ app.post("/login", async function (req, res) {
 
     bcrypt.compare(password, verifyUser.password, function (err, result) {
         if (result) {
-            let token = jwt.sign({ email, userid: verifyUser._id }, "shhh");
+            let token = jwt.sign({ email, userid: verifyUser._id }, process.env.JWT_SECRET_USER);
             res.cookie("token", token, {
                 expires: new Date(Date.now() + 25892000000),
                 httpOnly: true,
@@ -626,7 +655,7 @@ app.post("/admin", async (req, res) => {
 
     bcrypt.compare(password, admin.password , function (err, result) {
         if (result) {
-            let token = jwt.sign({ username}, "shhhh");
+            let token = jwt.sign({ username}, process.env.JWT_SECRET_ADMIN);
             res.cookie("token", token, {
                 expires: new Date(Date.now() + 25892000000),
                 httpOnly: true,
@@ -839,7 +868,7 @@ function isLoggedIn(req, res, next) {
         return res.status(401).send("You must be logged in");
     }
     try {
-        const data = jwt.verify(req.cookies.token, "shhh");
+        const data = jwt.verify(req.cookies.token, process.env.JWT_SECRET_USER);
         req.user = data;
         next();
     } catch (error) {
@@ -852,7 +881,7 @@ function adminIsLoggedIn(req, res, next) {
         return res.status(401).send("You must be logged in");
     }
     try {
-        const data = jwt.verify(req.cookies.token, "shhhh");
+        const data = jwt.verify(req.cookies.token, process.env.JWT_SECRET_ADMIN);
         req.admin = data;
         next();
     } catch (error) {
@@ -864,6 +893,9 @@ function adminIsLoggedIn(req, res, next) {
 
 //------------SERVER----------------
 // Server Listener
-app.listen(3000, () => {
-    console.log("Server running at port: 3000");
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });
+

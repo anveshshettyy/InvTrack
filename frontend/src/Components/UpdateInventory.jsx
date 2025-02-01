@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FaEdit  } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
+import { axiosInstance } from '../axios';
 
 const UpdateInventory = () => {
     const [inventories, setInventories] = useState([]);
@@ -18,7 +19,7 @@ const UpdateInventory = () => {
     useEffect(() => {
         const fetchUserCountry = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/country', { withCredentials: true });
+                const response = await axiosInstance.get('http://localhost:3000/country', { withCredentials: true });
                 setUserCountry(response.data);
             } catch (error) {
                 console.error('Error fetching user country:', error);
@@ -31,7 +32,7 @@ const UpdateInventory = () => {
     useEffect(() => {
         const fetchInventories = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/inventories', { withCredentials: true });
+                const response = await axiosInstance.get('http://localhost:3000/inventories', { withCredentials: true });
                 setInventories(response.data);
                 setLoading(false);
             } catch (error) {
@@ -45,7 +46,7 @@ const UpdateInventory = () => {
     const fetchItems = async () => {
         if (selectedInventory) {
             try {
-                const response = await axios.get(`http://localhost:3000/inventories/${selectedInventory}/items`);
+                const response = await axiosInstance.get(`http://localhost:3000/inventories/${selectedInventory}/items`);
                 setItems(response.data);
             } catch (error) {
                 console.error('Error fetching items:', error);

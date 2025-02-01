@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { axiosInstance } from '../axios';
 
 const AdminLogin = () => {
     const [username, setUsername] = useState('');
@@ -15,7 +16,7 @@ const AdminLogin = () => {
         setErrorMessage('');
 
         try {
-            const response = await axios.post("http://localhost:3000/admin", { username, password }, { withCredentials: true });
+            const response = await axiosInstance.post("http://localhost:3000/admin", { username, password }, { withCredentials: true });
             console.log('Admin logged in:', response.data);
             navigate('/admin'); // Redirect to Admin page after successful login
         } catch (error) {

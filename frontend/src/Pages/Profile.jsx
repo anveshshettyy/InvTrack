@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import Banner from '../assets/images/Banner.jpg'
 import { IoIosLogOut } from "react-icons/io";
+import { axiosInstance } from '../axios';
 
 
 const Profile = () => {
@@ -14,11 +15,11 @@ const Profile = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const userResponse = await axios.get(`http://localhost:3000/profile/${companyName}`, { withCredentials: true });
+        const userResponse = await axiosInstance.get(`http://localhost:3000/profile/${companyName}`, { withCredentials: true });
         setUserData(userResponse.data);
 
 
-        const inventoryResponse = await axios.get(`http://localhost:3000/inventory/${userResponse.data.userid}`, { withCredentials: true });
+        const inventoryResponse = await axiosInstance.get(`http://localhost:3000/inventory/${userResponse.data.userid}`, { withCredentials: true });
         setInventoryItems(inventoryResponse.data);
       } catch (error) {
         console.error('Error fetching user data:', error);
