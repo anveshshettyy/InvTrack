@@ -70,7 +70,7 @@ const UpdateInventory = () => {
 
     const handleSaveItem = async (itemId) => {
         try {
-            await axios.put(`/items/${itemId}`, {
+            await axiosInstance.put(`/items/${itemId}`, {
                 name: updatedItemName,
                 price: updatedItemPrice,
                 quantity: updatedItemQuantity,
@@ -85,7 +85,7 @@ const UpdateInventory = () => {
 
     const handleDeleteItem = async (itemId) => {
         try {
-            await axios.delete(`/items/${itemId}`);
+            await axiosInstance.delete(`/items/${itemId}`);
             setItems((prevItems) => prevItems.filter(item => item._id !== itemId));
         } catch (error) {
             console.error('Error deleting item:', error);

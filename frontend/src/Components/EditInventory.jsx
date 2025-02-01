@@ -29,7 +29,7 @@ const EditInventory = () => {
 
   // Delete inventory function
   const handleDelete = (inventoryId) => {
-    axios.delete(`/inventories/${inventoryId}`)
+    axiosInstance.delete(`/inventories/${inventoryId}`)
       .then(() => {
         // Remove the deleted inventory from the list
         setInventories(prevInventories => prevInventories.filter(inventory => inventory._id !== inventoryId));
@@ -42,7 +42,7 @@ const EditInventory = () => {
 
   // Rename inventory function
   const handleRename = (inventoryId) => {
-    axios.put(`/inventories/${inventoryId}`, { name: updatedName })
+    axiosInstance.put(`/inventories/${inventoryId}`, { name: updatedName })
       .then(response => {
         // Update the inventory in the state
         setInventories(prevInventories => 

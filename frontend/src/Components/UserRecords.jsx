@@ -30,7 +30,7 @@ const UserRecords = () => {
 
     const deleteUser = async (userId) => {
         try {
-            await axios.delete(`/admin/users/${userId}`, { withCredentials: true });
+            await axiosInstance.delete(`/admin/users/${userId}`, { withCredentials: true });
             setUsers(users.filter(user => user._id !== userId));
         } catch (error) {
             console.error('Error deleting user:', error);
@@ -50,7 +50,7 @@ const UserRecords = () => {
 
     const saveUser = async () => {
         try {
-            const response = await axios.put(`/admin/users/${editingUserId}`, formData, { withCredentials: true });
+            const response = await axiosInstance.put(`/admin/users/${editingUserId}`, formData, { withCredentials: true });
             const updatedUser = response.data;
             setUsers(users.map(user => (user._id === updatedUser._id ? updatedUser : user)));
             setEditingUserId(null);

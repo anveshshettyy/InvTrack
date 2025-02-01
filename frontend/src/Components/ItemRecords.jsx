@@ -46,7 +46,7 @@ const ItemRecords = () => {
 
     const handleSaveClick = async (itemId) => {
         try {
-            const response = await axios.put(
+            const response = await axiosInstance.put(
                 `/items/${itemId}`, // Updated endpoint
                 {
                     name: editFormData.itemName,
@@ -66,7 +66,7 @@ const ItemRecords = () => {
 
     const deleteItem = async (itemId) => {
         try {
-            const response = await axios.delete(`/items/${itemId}`, { withCredentials: true });
+            const response = await axiosInstance.delete(`/items/${itemId}`, { withCredentials: true });
             // Update the state after deletion
             setItems(items.filter(item => item._id !== itemId));
         } catch (error) {
