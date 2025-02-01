@@ -34,14 +34,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 .catch(err => console.error("MongoDB Connection Error:", err));
 
 // Serve React frontend in production
-if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, "../frontend/dist")));  
 
-  
-    app.get('*', (req, res) => {
-        res.sendFile(path.join(__dirname, "../frontend/dist", "index.html"));
-    });
-}
 
 // Signup Route
 app.get("/api/signup", function (req, res) {
@@ -889,6 +882,15 @@ function adminIsLoggedIn(req, res, next) {
 
 //------------SERVER----------------
 // Server Listener
+
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, "../frontend/dist")));  
+
+  
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, "../frontend/dist", "index.html"));
+    });
+}
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
