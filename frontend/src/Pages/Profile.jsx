@@ -5,7 +5,6 @@ import Banner from '../assets/images/Banner.jpg'
 import { IoIosLogOut } from "react-icons/io";
 import { axiosInstance } from '../axios';
 
-
 const Profile = () => {
   const [userData, setUserData] = useState(null);
   const [inventoryItems, setInventoryItems] = useState([]);

@@ -17,6 +17,7 @@ const Logout = () => {
       });
   }, [navigate]); 
 
+  
   return null; 
 }
 
