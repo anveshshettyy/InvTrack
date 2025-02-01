@@ -26,12 +26,12 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// mongoose.connect(process.env.MONGODB_URI, {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true
-// })
-// .then(() => console.log("Connected to MongoDB Atlas"))
-// .catch(err => console.error("MongoDB Connection Error:", err));
+mongoose.connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+.then(() => console.log("Connected to MongoDB Atlas"))
+.catch(err => console.error("MongoDB Connection Error:", err));
 
 // Serve React frontend in production
 if (process.env.NODE_ENV === 'production') {
